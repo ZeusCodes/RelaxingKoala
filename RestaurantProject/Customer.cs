@@ -68,23 +68,8 @@ namespace RestaurantProject
                 }
             } while (checkOut != true);
             Order o = new Order(this, selectedItems);
-            o.ShowOrderDetails();
-        }
-
-        // Method to request an order invoice
-        public void RequestOrderInvoice()
-        {
-            // Logic to request an order invoice
-            // This is a stub implementation for demonstration purposes
-            Console.WriteLine("Order invoice requested.");
-        }
-
-        // Method to request to make a payment
-        public void RequestPayment()
-        {
-            // Logic to request to make a payment
-            // This is a stub implementation for demonstration purposes
-            Console.WriteLine("Payment requested.");
+            o.ShowInvoice();
+            o.makePayment();
         }
 
         // Override the DisplayInfo method to include customer-specific details

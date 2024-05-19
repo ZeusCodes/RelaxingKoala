@@ -8,6 +8,7 @@ namespace RestaurantProject
         // Properties to store order details
         private List<MenuItem> selectedItems;
         private Customer customer;
+        private decimal totalBill;
 
         // Constructor to initialize order
         public Order(Customer customer, List<MenuItem> selectedItems)
@@ -38,7 +39,7 @@ namespace RestaurantProject
             }
             Console.WriteLine("---------------------------------------");
 
-            decimal totalBill = CalculateTotalBill();
+            totalBill = CalculateTotalBill();
             Console.WriteLine($"\nTotal Bill: {totalBill.ToString("C")}");
             Console.WriteLine("---------------------------------------");
 
@@ -56,11 +57,11 @@ namespace RestaurantProject
         }
 
         // Method to request payment
-        public void makePayment()
+        public Payments makePayment()
         {
-            // Logic to request payment
-            // This is a stub implementation for demonstration purposes
             Console.WriteLine("Payment requested.");
+            Payments p = new Payments( customer, selectedItems, totalBill);
+            return p;
         }
     }
 }
