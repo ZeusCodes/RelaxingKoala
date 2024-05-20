@@ -70,6 +70,7 @@ namespace RestaurantProject
             Order o = new Order(this, selectedItems);
             o.ShowInvoice();
             o.makePayment();
+
         }
 
         // Override the DisplayInfo method to include customer-specific details

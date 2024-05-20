@@ -31,7 +31,7 @@ namespace RestaurantProject
         private string GenerateReceiptContent()
         {
             string reciept = $"-----------------------------------------------------------\n-----------------------------------------------------------\n Receipt\n-----------------------------------------------------------\n";
-            reciept += $"Item ID   Item\t\t\tPrice\n\n";
+            reciept += $" ID   Item\t\t\tPrice\n\n";
             foreach (var item in selectedItems)
             {
                 reciept += $"{item.Id}   {item.Name}\t\t\t\t{item.Price}\n";
@@ -39,7 +39,7 @@ namespace RestaurantProject
             reciept += "-----------------------------------------------------------\n";
             reciept += $"\nTotal Bill: {amount:C}\n";
             reciept += "-----------------------------------------------------------\n";
-            reciept += "-----------------------------------------------------------\nThank You For Your Order!!";
+            reciept += "-----------------------------------------------------------\nThank You For Your Order!!\n";
             reciept += "-----------------------------------------------------------\n";
             Console.WriteLine(reciept);
             return reciept;

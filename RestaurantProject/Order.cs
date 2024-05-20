@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace RestaurantProject
@@ -61,7 +62,37 @@ namespace RestaurantProject
         {
             Console.WriteLine("Payment requested.");
             Payments p = new Payments( customer, selectedItems, totalBill);
+            WriteSelectedItemsToFile();
             return p;
+        }
+
+        public string FormatForFile(MenuItem item)
+        {
+            return $"{item.Id},{item.Name};";
+        }
+
+        public void WriteSelectedItemsToFile()
+        {
+            Console.WriteLine("In WriteSelectedItemsToFile");
+            try
+            {
+                Console.WriteLine("Writing to File");
+                using (StreamWriter writer = new StreamWriter("/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/OrdersToKitchen.txt", true)) // Open the file in append mode
+                {
+                    string order = "";
+                    foreach (var item in selectedItems)
+                    {
+                        // Format each MenuItem object and write to file
+                        order += FormatForFile(item);
+                    }
+                    Console.WriteLine($"Writing to File this: {order}");
+                    writer.WriteLine(order);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error writing to file: {ex.Message}");
+            }
         }
     }
 }
