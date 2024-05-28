@@ -50,14 +50,18 @@ namespace RestaurantProject
         {
             try
             {
-                MailMessage mail = new MailMessage("your-email@example.com", toEmail);
+                //replace Example by you email
+                //Ensure that you have enabled "Allow less secure apps" in your Gmail settings if you are using your Gmail account password.
+                //If you have 2 - step verification enabled on your Gmail account, you should generate an app-specific password and use it instead of your regular Gmail password.
+                MailMessage mail = new MailMessage("example@gmail.com", toEmail);
                 SmtpClient client = new SmtpClient
                 {
-                    Port = 25,
+                    Port = 587, 
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Host = "smtp.example.com",
-                    Credentials = new System.Net.NetworkCredential("your-email@example.com", "your-password")
+                    Host = "smtp.gmail.com",
+                    EnableSsl = true, 
+                    Credentials = new System.Net.NetworkCredential("example@gmail.com", "")
                 };
 
                 mail.Subject = subject;

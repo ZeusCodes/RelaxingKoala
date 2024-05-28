@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace RestaurantProject
@@ -8,14 +9,16 @@ namespace RestaurantProject
         // Properties specific to a customer
         public string CustomerID { get; set; }
         public string StoredCardDetails { get; set; }
+        public string Password { get; set; }
 
         // Default constructor
         public Customer() { }
 
         // Parameterized constructor to initialize properties
-        public Customer(string name, string address, string email, string phoneNumber, string customerID, string storedCardDetails)
+        public Customer(string name, string address, string email, string phoneNumber, string customerID, string storedCardDetails,string password)
             : base(name, address, email, phoneNumber)
         {
+            Password = password;
             CustomerID = customerID;
             StoredCardDetails = storedCardDetails;
         }
@@ -23,21 +26,80 @@ namespace RestaurantProject
         // Method to determine if the customer wants to make a reservation or order online
         public bool WantsToMakeReservation()
         {
-            // Logic to determine if the customer wants to make a reservation
-            // This is a stub implementation for demonstration purposes
-            return true; // Placeholder
+            Reservation r = new Reservation();
+            Console.WriteLine("The Restaurant is open from 10am to 10pm\nPlease enter your desired time for Reservation(in 24 hour clock)(reservations only allowed for 1hour):");
+            for(int i = 0;i<5;i++)
+            { 
+                string timeInput = Console.ReadLine();
+                if (int.TryParse(timeInput, out int time))
+                {
+
+                    if (r.IsTableAvailable(time))
+                    {
+                        string input = Console.ReadLine();
+                        if (input.ToLower() == "y")
+                        {
+                            r.MakeReservation(this, time);
+                            return true; // Placeholder
+                        }
+                    } 
+                }
+                else
+                {
+                    // Conversion failed
+                    Console.WriteLine("Invalid input. Please enter a valid time.");
+                    return WantsToMakeReservation();
+                }
+            }
+            return false;
         }
 
         // Method to make a new profile for the customer
-        public void CreateNewProfile(string name, string address, string email, string phoneNumber, string customerID, string storedCardDetails)
+        public void CreateNewProfile()
         {
-            Name = name;
-            Address = address;
-            Email = email;
-            PhoneNumber = phoneNumber;
-            CustomerID = customerID;
-            StoredCardDetails = storedCardDetails;
+            Console.WriteLine("Enter Name");
+            Name = Console.ReadLine();
+            Console.WriteLine("Enter Address");
+            Address = Console.ReadLine();
+            Console.WriteLine("Enter Email Id");
+            Email = Console.ReadLine();
+            Console.WriteLine("Enter Phone Number");
+            PhoneNumber = Console.ReadLine();
+            Console.WriteLine("Enter Password");
+            Password = Console.ReadLine();
+            Console.WriteLine("Enter Card Details");
+            StoredCardDetails = Console.ReadLine();
+            CustomerID = (NoOfEntries()+1).ToString();
+            WriteProfileToFile();
             Console.WriteLine("New customer profile created.");
+        }
+
+        public int NoOfEntries()
+        {
+            string fileDir = "/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/CustomerProfile.txt";
+            string content = File.ReadAllText(fileDir);
+            string[] profiles = content.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return profiles.Length;
+        }
+
+        public void WriteProfileToFile()
+        {
+            try
+            {
+                //Change the Text File Directory According to your Computer
+                string fileDir = "/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/CustomerProfile.txt";
+                using (StreamWriter writer = new StreamWriter(fileDir, true)) // Open the file in append mode
+                {
+                    string profile = "";
+                    profile += $"{CustomerID},{Name},{Password},{Email},{PhoneNumber},{Address},{StoredCardDetails};";
+                    Console.WriteLine($"Writing to File this: {profile}");
+                    writer.WriteLine(profile);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error writing to file: {ex.Message}");
+            }
         }
 
         // Method to determine which menu to show

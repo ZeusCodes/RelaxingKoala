@@ -73,11 +73,11 @@ namespace RestaurantProject
 
         public void WriteSelectedItemsToFile()
         {
-            Console.WriteLine("In WriteSelectedItemsToFile");
             try
             {
-                Console.WriteLine("Writing to File");
-                using (StreamWriter writer = new StreamWriter("/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/OrdersToKitchen.txt", true)) // Open the file in append mode
+                //Change the Text File Directory According to your Computer
+                string fileDir = "/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/OrdersToKitchen.txt";
+                using (StreamWriter writer = new StreamWriter(fileDir, true)) // Open the file in append mode
                 {
                     string order = "";
                     foreach (var item in selectedItems)

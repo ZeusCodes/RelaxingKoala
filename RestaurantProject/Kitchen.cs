@@ -16,6 +16,7 @@ namespace RestaurantProject
 
         public List<List<MenuItem>> ShowOrders()
         {
+            //Change the Text File Directory According to your Computer
             string filePath = "/Users/pallabpaul/Desktop/Pallab Paul/University/Sem6/SoftArch/Assignment3/RestaurantProject/RestaurantProject/OrdersToKitchen.txt";
             try
             {
