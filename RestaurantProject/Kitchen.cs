@@ -50,7 +50,7 @@ namespace RestaurantProject
                         listOfOrders.Add(items);
                     }
                     Console.WriteLine($"-------------Order List Updated!-------------");
-                    Console.WriteLine("\n---------------------------------------\n---------------------------------------"); 
+                    Console.WriteLine("\n---------------------------------------\n---------------------------------------");
 
                     foreach (var order in listOfOrders)
                     {
@@ -59,11 +59,12 @@ namespace RestaurantProject
                         foreach (var item in order)
                         {
                             Console.Write($"{item.Name} , ");
-                        }                    Console.WriteLine("\n---------------------------------------\n---------------------------------------"); 
+                        }
+                        Console.WriteLine("\n---------------------------------------\n---------------------------------------");
 
-                        Console.WriteLine(); 
+                        Console.WriteLine();
                     }
-                    Console.WriteLine("\n---------------------------------------\n---------------------------------------"); 
+                    Console.WriteLine("\n---------------------------------------\n---------------------------------------");
                     previousContentHash = currentContentHash;
                 }
             }

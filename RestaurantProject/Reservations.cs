@@ -46,9 +46,9 @@ namespace RestaurantProject
         public bool IsTableAvailable(int time)
         {
             time = time - 10;
-            if (time > 11)
+            if (time > 11 || time < 0)
             {
-                Console.WriteLine($"Invalid Time");
+                Console.WriteLine($"Invalid Time!! Please enter in 24 hours clock format");
                 return false;
             }
             foreach (bool isAvailable in tableAvailability[time])

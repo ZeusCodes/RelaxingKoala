@@ -53,15 +53,15 @@ namespace RestaurantProject
                 //replace Example by you email
                 //Ensure that you have enabled "Allow less secure apps" in your Gmail settings if you are using your Gmail account password.
                 //If you have 2 - step verification enabled on your Gmail account, you should generate an app-specific password and use it instead of your regular Gmail password.
-                MailMessage mail = new MailMessage("example@gmail.com", toEmail);
+                MailMessage mail = new MailMessage("c.hrist.i.na.na.mode.o832@googlemail.com", toEmail);
                 SmtpClient client = new SmtpClient
                 {
                     Port = 587, 
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Host = "smtp.gmail.com",
+                    Host = "smtp.googlemail.com",
                     EnableSsl = true, 
-                    Credentials = new System.Net.NetworkCredential("example@gmail.com", "")
+                    Credentials = new System.Net.NetworkCredential("c.hrist.i.na.na.mode.o832@googlemail.com", "")
                 };
 
                 mail.Subject = subject;
@@ -72,7 +72,8 @@ namespace RestaurantProject
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Failed to send receipt: {ex.Message}");
+                Console.WriteLine($"Dummy send message to {toEmail}. Email Authentication Required and password required hence not sent.");
+                //Console.WriteLine($"Failed to send receipt: {ex.Message}");
             }
         }
     }

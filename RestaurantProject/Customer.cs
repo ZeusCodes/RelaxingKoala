@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 
 namespace RestaurantProject
 {
@@ -15,7 +17,7 @@ namespace RestaurantProject
         public Customer() { }
 
         // Parameterized constructor to initialize properties
-        public Customer(string name, string address, string email, string phoneNumber, string customerID, string storedCardDetails,string password)
+        public Customer(string name, string address, string email, string phoneNumber, string customerID, string storedCardDetails, string password)
             : base(name, address, email, phoneNumber)
         {
             Password = password;
@@ -27,9 +29,9 @@ namespace RestaurantProject
         public bool WantsToMakeReservation()
         {
             Reservation r = new Reservation();
-            Console.WriteLine("The Restaurant is open from 10am to 10pm\nPlease enter your desired time for Reservation(in 24 hour clock)(reservations only allowed for 1hour):");
-            for(int i = 0;i<5;i++)
-            { 
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("The Restaurant is open from 10am to 10pm\nPlease enter your desired time for Reservation(in 24 hour clock)(reservations only allowed for 1hour):");
                 string timeInput = Console.ReadLine();
                 if (int.TryParse(timeInput, out int time))
                 {
@@ -42,7 +44,7 @@ namespace RestaurantProject
                             r.MakeReservation(this, time);
                             return true; // Placeholder
                         }
-                    } 
+                    }
                 }
                 else
                 {
@@ -59,19 +61,83 @@ namespace RestaurantProject
         {
             Console.WriteLine("Enter Name");
             Name = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(Name))
+            {
+                Console.WriteLine("Name cannot be empty. Please enter a valid name:");
+                Name = Console.ReadLine();
+            }
+
             Console.WriteLine("Enter Address");
             Address = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(Address))
+            {
+                Console.WriteLine("Address cannot be empty. Please enter a valid address:");
+                Address = Console.ReadLine();
+            }
+
             Console.WriteLine("Enter Email Id");
             Email = Console.ReadLine();
+            while (!IsValidEmail(Email))
+            {
+                Console.WriteLine("Invalid email format. Please enter a valid email:");
+                Email = Console.ReadLine();
+            }
+
             Console.WriteLine("Enter Phone Number");
             PhoneNumber = Console.ReadLine();
+            while (!IsValidPhoneNumber(PhoneNumber))
+            {
+                Console.WriteLine("Invalid phone number. Please enter a valid phone number:");
+                PhoneNumber = Console.ReadLine();
+            }
+
             Console.WriteLine("Enter Password");
             Password = Console.ReadLine();
+
             Console.WriteLine("Enter Card Details");
             StoredCardDetails = Console.ReadLine();
-            CustomerID = (NoOfEntries()+1).ToString();
+            while (!IsValidCardDetails(StoredCardDetails))
+            {
+                Console.WriteLine("Invalid card details. Please enter valid card details:");
+                StoredCardDetails = Console.ReadLine();
+            }
+            CustomerID = (NoOfEntries() + 1).ToString();
             WriteProfileToFile();
             Console.WriteLine("New customer profile created.");
+        }
+
+        static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(email);
+                return mailAddress.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return false;
+
+            // Example regex for a valid phone number (10 digits)
+            return Regex.IsMatch(phoneNumber, @"^\d{10}$");
+        }
+
+        static bool IsValidCardDetails(string cardDetails)
+        {
+            if (string.IsNullOrWhiteSpace(cardDetails))
+                return false;
+
+            // Example regex for a valid credit card number (16 digits)
+            return Regex.IsMatch(cardDetails, @"^\d{16}$");
         }
 
         public int NoOfEntries()
@@ -92,7 +158,6 @@ namespace RestaurantProject
                 {
                     string profile = "";
                     profile += $"{CustomerID},{Name},{Password},{Email},{PhoneNumber},{Address},{StoredCardDetails};";
-                    Console.WriteLine($"Writing to File this: {profile}");
                     writer.WriteLine(profile);
                 }
             }
@@ -124,7 +189,8 @@ namespace RestaurantProject
                 {
                     checkOut = true;
                     selectedItems = m.Checkout();
-                } else
+                }
+                else
                 {
                     m.SelectItem(input);
                 }

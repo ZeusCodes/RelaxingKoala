@@ -71,55 +71,15 @@ namespace RestaurantProject
                 "dinner" => dinnerMenuItems,
                 _ => null
             };
-            return menuToSelectFrom;
-            //if (menuToDisplay == null)
-            //{
-            //    Console.WriteLine("Invalid meal type. Please choose from 'breakfast', 'lunch', or 'dinner'.");
-            //    return;
-            //}
-
-            //Console.WriteLine($"{mealType} Menu:");
-            //foreach (var item in menuToDisplay.Values)
-            //{
-            //    item.DisplayInfo();
-            //    Console.WriteLine(); // Add a blank line between items
-            //}
-        }
-
-        // Method to select items (by IDs) from a specific meal type and return the total price
-        public decimal SelectItems(string mealType, List<string> itemIds)
-        {
-            Dictionary<string, MenuItem> menuToSelectFrom = mealType.ToLower() switch
-            {
-                "breakfast" => breakfastMenuItems,
-                "lunch" => lunchMenuItems,
-                "dinner" => dinnerMenuItems,
-                _ => null
-            };
-
             if (menuToSelectFrom == null)
             {
                 Console.WriteLine("Invalid meal type. Please choose from 'breakfast', 'lunch', or 'dinner'.");
-                return 0m;
+                ShowMenu(Console.ReadLine());
             }
-
-            decimal totalPrice = 0m;
-            Console.WriteLine("Selected Items:");
-            foreach (var id in itemIds)
-            {
-                if (menuToSelectFrom.TryGetValue(id, out var item))
-                {
-                    item.DisplayInfo();
-                    totalPrice += item.Price;
-                }
-                else
-                {
-                    Console.WriteLine($"Item with ID {id} not found in the {mealType} menu.");
-                }
-            }
-            Console.WriteLine($"Total Price: {totalPrice.ToString("C")}");
-            return totalPrice;
+            return menuToSelectFrom;
         }
+
+        // Method to select items (by IDs) from a specific meal type and return the total price
         public void SelectItem(string item)
         {
             if (menuToSelectFrom.ContainsKey(item))

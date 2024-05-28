@@ -10,7 +10,7 @@ namespace RestaurantProject
         private List<MenuItem> selectedItems;
         private readonly Customer customer;
         private readonly decimal amount;
-        private readonly Receipt receipt;
+        public readonly Receipt receipt=null;
 
         // Constructor to initialize payment details
         public Payments(Customer customer, List<MenuItem> selectedItems, decimal amount)

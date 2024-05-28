@@ -62,7 +62,10 @@ namespace RestaurantProject
         {
             Console.WriteLine("Payment requested.");
             Payments p = new Payments( customer, selectedItems, totalBill);
-            WriteSelectedItemsToFile();
+            if (p.receipt != null)
+            {
+                WriteSelectedItemsToFile();
+            }
             return p;
         }
 
@@ -85,7 +88,6 @@ namespace RestaurantProject
                         // Format each MenuItem object and write to file
                         order += FormatForFile(item);
                     }
-                    Console.WriteLine($"Writing to File this: {order}");
                     writer.WriteLine(order);
                 }
             }
